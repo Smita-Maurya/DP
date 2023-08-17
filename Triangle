@@ -1,0 +1,26 @@
+class Solution {
+public:
+int helper(vector<vector<int>>&tri , int i , int j , int n , vector<vector<int>>&dp){
+    if(i==n){
+        return tri[i][j];
+    }
+    if(dp[i][j]!=-1){
+        return dp[i][j];
+    }
+    int down= tri[i][j] +helper(tri , i+1 , j , n , dp);
+    int dia=tri[i][j]+helper(tri , i+1 , j+1 , n , dp);
+    return dp[i][j]=min(down , dia);
+}
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n=triangle.size();
+ 
+        vector<vector<int>>dp=triangle;//(n+1 , vector<int>(n+1 , -1));
+         
+        for(auto &x:dp){
+            for(auto &y:x){
+                y=-1;
+            }
+        }
+        return helper(triangle , 0 , 0 , n-1 , dp);
+    }
+};
