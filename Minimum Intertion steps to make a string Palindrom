@@ -1,0 +1,24 @@
+class Solution {
+public:
+ 
+
+int helper(int i , int j ,string &a , vector<vector<int>>&dp){
+if(i>=j){
+    return 0;
+}
+if(dp[i][j]!=-1){
+    return dp[i][j];
+}
+if(a[i]==a[j]){
+    return dp[i][j] = helper(i+1  , j-1 , a, dp);
+}
+else{
+    return dp[i][j] = min(helper(i+1 , j , a , dp) ,helper(i  ,j-1 , a , dp))+1;
+}
+}
+    int minInsertions(string s) {
+        int n=s.size();
+        vector<vector<int>>dp(n , vector<int>(n ,-1));
+        return helper(0 , n-1 , s , dp);
+    }
+};
