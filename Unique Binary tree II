@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<TreeNode*>helper(int st , int end){
+        vector<TreeNode*>v;
+        if(st>end){
+            v.push_back(NULL);
+            return v;
+        }
+        for(int i=st; i<=end ; i++){
+            vector<TreeNode*>left= helper(st , i-1);
+            vector<TreeNode*>right= helper(i+1, end);
+            for(int j=0; j<left.size() ; j++){
+                for(int k=0; k<right.size() ; k++){
+                    TreeNode*root= new TreeNode(i);
+                    root->left=left[j];
+                    root->right= right[k];
+                    v.push_back(root);
+                }
+            }
+        }
+        return v;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+        return helper(1 , n);
+    }
+};
