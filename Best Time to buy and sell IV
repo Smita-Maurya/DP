@@ -1,0 +1,33 @@
+class Solution {
+public:
+int helper(int i , int operations ,vector<int>&prices , int k , vector<vector<int>>&dp){
+    int n=prices.size();
+    if(i>=n){
+        return 0;
+    }
+    if(operations==2*k){
+        return 0;
+    }
+    if(dp[i][operations]!=-1){
+        return dp[i][operations];
+    }
+ 
+    int profit=0;
+    if(operations%2==0){
+        int dobuy = -prices[i]+helper(i+1 ,operations+1 , prices , k , dp);
+        int skip= helper(i+1 , operations ,prices , k , dp);
+        profit=max(dobuy , skip);
+    }
+    else{
+    int sell = prices[i]+ helper(i+1 , operations+1 , prices , k ,dp);
+    int skip=helper(i+1 , operations ,prices , k , dp);
+    profit = max(sell ,skip);
+    }
+    return dp[i][operations]=profit;
+}
+    int maxProfit(int k, vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<int>>dp(n , vector<int>(2*k , -1));
+        return helper(0 , 0 , prices , k , dp);
+    }
+};
