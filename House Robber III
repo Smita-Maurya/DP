@@ -1,0 +1,37 @@
+class Solution {
+public:
+     unordered_map<TreeNode* , int>map;
+     int helper(TreeNode* root){
+         if(!root){
+             return 0;
+         }
+         if(map.count(root)){
+             return map[root];
+         }
+         int l=helper(root->left);
+         int r=helper(root->right);
+
+         int ll=0,lr=0,rl=0,rr=0;
+
+         if(root->left){
+             ll=helper(root->left->left);
+             lr=helper(root->left->right);
+         }
+         if(root->right){
+             rl=helper(root->right->left);
+             rr=helper(root->right->right);
+         }
+         int val=root->val;
+         int lmx=ll+lr;
+         int rmx=rl+rr;
+         int sel1=val+lmx+rmx;
+         int sel2= l+max(r , rmx);
+         int sel3 = r+max(l, lmx);
+         map[root] =max(sel1 ,max(sel2 , sel3));
+         return map[root];
+     }
+    int rob(TreeNode* root) {
+        
+        return helper(root);
+    }
+};
