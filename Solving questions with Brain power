@@ -1,0 +1,21 @@
+class Solution {
+public:
+    long long helper(int i , vector<vector<int>>& que , vector<long long>&dp  ){
+        if(i>=que.size()){
+            return 0;
+        }
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+         
+        long long sel= que[i][0]+helper(i+que[i][1]+1 , que , dp);
+        long long notsel =0 + helper(i+1 , que , dp);
+         
+        return dp[i] =max(sel , notsel);
+    }
+    long long mostPoints(vector<vector<int>>& questions) {
+        int t=questions.size();
+        vector<long long>dp(t ,-1);
+        return helper(0 , questions , dp);
+    }
+};
