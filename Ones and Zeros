@@ -1,0 +1,51 @@
+class Solution {
+public:
+int count(string &str){
+    int count0=0;
+    //int count1=0;
+    for(auto x:str){
+        if(x=='0'){
+            count0++;
+        }
+         
+    }
+    return count0;
+}
+int count3(string &str){
+    //int count0=0;
+    int count1=0;
+    for(auto x:str){
+        if(x=='1'){
+            count1++;
+         
+    }
+    }
+    return count1;
+}
+int helper(int i , vector<string>&str ,int m , int n,vector<vector<vector<int>>>&dp ){
+    if(i>=str.size()){
+        return 0;
+    }
+    if(dp[i][m][n]!=-1){
+        return dp[i][m][n];
+    }
+    int count0=count(str[i]);
+    int count1=count3(str[i]);
+    int pick=INT_MIN;
+    if(m>=count0 && n>=count1){
+        pick=1+helper(i+1 , str , m-count0 , n-count1 , dp);
+    }
+        int nonpick = 0+ helper(i+1 , str , m , n , dp);
+    dp[i][m][n]= max(pick , nonpick);
+    return dp[i][m][n];
+}
+
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int t=strs.size();
+        
+            
+         
+        vector<vector<vector<int>>>dp(t , vector<vector<int>>(m+1 , vector<int>(n+1 , -1)));
+        return helper( 0 , strs , m , n , dp);
+    }
+};
